@@ -1,0 +1,11 @@
+version: '3'
+services:
+  appy:
+    container_name: appy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
