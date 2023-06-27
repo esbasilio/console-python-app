@@ -1,6 +1,9 @@
 import os
 import json
 
+data_workers_src = "./data/workers.json"
+data_professions_src = "./data/professions.json"
+
 # init function
 def get_json_data(file_name):
     with open(file_name) as file:
@@ -10,7 +13,7 @@ def get_json_data(file_name):
 #
 # init function
 def save_workers_json_data():
-    with open('workers.json', 'w') as file:
+    with open(data_workers_src, 'w') as file:
         json.dump(worker_list, file)
 # end function
 #
@@ -86,10 +89,10 @@ def reports_workers_menu():
 def save_worker():
     os.system('clear')
     document = input("ingrese DNI:")
-    nombre = input("ingrese Nombre y Apellido:")
-    edad = input("ingrese edad:")
+    name = input("ingrese Nombre y Apellido:")
+    age = input("ingrese edad:")
 
-    profesion = show_professions_and_get_one_menu()
+    profession = show_professions_and_get_one_menu()
 
     status = input('''ingrese estado:
                         [0] Inactivo
@@ -97,20 +100,20 @@ def save_worker():
 
                         Ingrese opcion:''')
 
-    worker_list[document] = [nombre, edad, profesion, status]
+    worker_list[document] = [name, age, profession, status]
     save_workers_json_data()
     management_workers_menu()
 # end function
 #
 # init function
-def set_worker_document(accion):
+def set_worker_document(action):
     os.system('clear')
     document = input("Ingrese DNI trabajador:")
 
     if document in worker_list:
-        if accion == "modificar":
+        if action == "modificar":
             modify_worker_menu(document)
-        elif accion == "ver":
+        elif action == "ver":
             show_worker_data(document)
     else:
         print(f"El trabajador con DNI {document} no existe.")
@@ -129,11 +132,11 @@ def modify_worker_menu(worker_document):
 
                         Ingrese numero:''')
     if option == "1":
-        nombre = input("Ingrese Nombre y apellido:")
-        worker_list[worker_document][0] = nombre
+        name = input("Ingrese Nombre y apellido:")
+        worker_list[worker_document][0] = name
     elif option == "2":
-        edad = input("Ingrese Edad:")
-        worker_list[worker_document][1] = edad
+        age = input("Ingrese Edad:")
+        worker_list[worker_document][1] = age
     elif option == "3":
         profession = show_professions_and_get_one_menu()
         worker_list[worker_document][2] = profession
@@ -257,6 +260,6 @@ def print_worker(document, worker):
         else:
             print("Estado: Inactivo")
 # end function
-professions = get_json_data("professions.json")
-worker_list = get_json_data("workers.json")
+professions = get_json_data(data_professions_src)
+worker_list = get_json_data(data_workers_src)
 main_menu()
